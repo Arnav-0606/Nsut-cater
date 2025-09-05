@@ -163,15 +163,9 @@ const History = () => {
                           {order.items.map((item, index) => (
                             <div key={index} className="flex items-center justify-between text-sm">
                               <div className="flex-1">
-                                <span className="font-medium">{item.menuItem.name}</span>
-                                {item.customizations && item.customizations.length > 0 && (
-                                  <span className="text-muted-foreground ml-2">
-                                    ({item.customizations.join(', ')})
-                                  </span>
-                                )}
                               </div>
                               <div className="text-right">
-                                <span>₹{item.menuItem.price} × {item.quantity}</span>
+                                <span>₹{item.menuItem.price} * {item.quantity}</span>
                               </div>
                             </div>
                           ))}

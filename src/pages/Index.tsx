@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clock, Calendar, TrendingUp, Users, Star, Leaf } from "lucide-react";
-import { weeklyMenu, mockUser, mockOrders } from "@/data/mockData";
+import { mockUser, mockOrders } from "@/data/mockData";
 
 const Index = () => {
   const [selectedDay, setSelectedDay] = useState('monday');
@@ -15,12 +15,6 @@ const Index = () => {
   const todayOrders = mockOrders.filter(order => 
     order.orderTime.toDateString() === today.toDateString()
   );
-
-  const weekDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-  const mealTypes = ['breakfast', 'lunch', 'dinner'];
-
-  const currentMenu = weeklyMenu[selectedDay as keyof typeof weeklyMenu][selectedMeal as keyof typeof weeklyMenu.monday];
-
   return (
     <Layout userName={mockUser.name}>
       <div className="space-y-6 animate-fade-in">

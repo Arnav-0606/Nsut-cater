@@ -15,7 +15,6 @@ import {
 const userItems = [
   { title: "Dashboard", url: "/", icon: Home },
   { title: "Order Food", url: "/order", icon: ShoppingCart },
-  { title: "My Wallet", url: "/wallet", icon: Wallet },
   { title: "Order History", url: "/history", icon: History },
 ];
 

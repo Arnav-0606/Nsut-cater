@@ -43,22 +43,6 @@ const mockTransactions: Transaction[] = [
     description: 'Order #ORD003 - Masala Dosa + Lime Soda',
     date: new Date('2024-01-14T08:15:00'),
     status: 'completed'
-  },
-  {
-    id: 'TXN004',
-    type: 'credit',
-    amount: 1000,
-    description: 'Wallet Recharge - Card Payment',
-    date: new Date('2024-01-13T14:20:00'),
-    status: 'completed'
-  },
-  {
-    id: 'TXN005',
-    type: 'debit',
-    amount: 150,
-    description: 'Order #ORD002 - Chicken Curry',
-    date: new Date('2024-01-12T19:30:00'),
-    status: 'completed'
   }
 ];
 
@@ -92,6 +76,7 @@ const Wallet = () => {
         title: "Recharge Successful!",
         description: `₹${amount} has been added to your wallet`,
       });
+      mockUser.walletBalance += amount;
       setRechargeAmount('');
       setIsRechargeDialogOpen(false);
     }, 2000);
@@ -142,7 +127,7 @@ const Wallet = () => {
                     className="mt-1"
                   />
                 </div>
-                
+          
                 <div>
                   <Label>Quick Amount</Label>
                   <div className="grid grid-cols-4 gap-2 mt-2">
@@ -168,14 +153,6 @@ const Wallet = () => {
                       className="h-12"
                     >
                       UPI
-                    </Button>
-                    <Button
-                      variant={selectedPaymentMethod === 'card' ? 'default' : 'outline'}
-                      onClick={() => setSelectedPaymentMethod('card')}
-                      className="h-12"
-                    >
-                      <CreditCard className="h-4 w-4 mr-2" />
-                      Card
                     </Button>
                   </div>
                 </div>

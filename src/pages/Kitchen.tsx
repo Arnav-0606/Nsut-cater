@@ -62,11 +62,6 @@ const Kitchen = () => {
     const diffMins = Math.floor(diffMs / 60000);
     return diffMins;
   };
-
-  const getEstimatedPrepTime = (order: Order) => {
-    return order.items.reduce((total, item) => Math.max(total, item.menuItem.preparationTime), 0);
-  };
-
   const pendingOrders = orders.filter(order => order.status === 'placed');
   const preparingOrders = orders.filter(order => order.status === 'preparing');
   const readyOrders = orders.filter(order => order.status === 'ready');
@@ -187,7 +182,6 @@ const Kitchen = () => {
               ) : (
                 pendingOrders.map(order => {
                   const orderAge = getOrderAge(order.orderTime);
-                  const estimatedTime = getEstimatedPrepTime(order);
                   const isUrgent = orderAge > 10;
 
                   return (
@@ -216,23 +210,12 @@ const Kitchen = () => {
                                 <div>
                                   <span className="font-medium">{item.menuItem.name}</span>
                                   <span className="text-muted-foreground ml-2">×{item.quantity}</span>
-                                  {item.customizations && item.customizations.length > 0 && (
-                                    <div className="text-xs text-muted-foreground mt-1">
-                                      Note: {item.customizations.join(', ')}
-                                    </div>
-                                  )}
                                 </div>
-                                <span className="text-xs text-muted-foreground">
-                                  {item.menuItem.preparationTime}m
-                                </span>
                               </div>
                             ))}
                           </div>
                           
                           <div className="flex items-center justify-between pt-2 border-t">
-                            <div className="text-sm text-muted-foreground">
-                              Est. prep time: {estimatedTime} mins
-                            </div>
                             <Button 
                               onClick={() => updateOrderStatus(order.id, 'preparing')}
                               className="bg-gradient-primary hover:bg-gradient-primary/90"
@@ -262,9 +245,6 @@ const Kitchen = () => {
               ) : (
                 preparingOrders.map(order => {
                   const orderAge = getOrderAge(order.orderTime);
-                  const estimatedTime = getEstimatedPrepTime(order);
-                  const progress = Math.min((orderAge / estimatedTime) * 100, 100);
-
                   return (
                     <Card key={order.id} className="shadow-card hover:shadow-soft transition-all duration-200">
                       <CardHeader>
@@ -292,15 +272,7 @@ const Kitchen = () => {
                               </div>
                             ))}
                           </div>
-                          
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between text-sm">
-                              <span>Progress</span>
-                              <span>{Math.round(progress)}%</span>
-                            </div>
-                            <Progress value={progress} className="h-2" />
-                          </div>
-                          
+                                                 
                           <div className="flex items-center justify-between pt-2 border-t">
                             <div className="text-sm text-muted-foreground">
                               Est. completion: {Math.max(0, estimatedTime - orderAge)} mins
